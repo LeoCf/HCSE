@@ -11,7 +11,7 @@ var ligaçoes = ['http://aveiro.m-iti.org/hybridnilm/public/api/v1/plugwise/samp
 var resultados = [];
 var deviceUrl1 = 'http://192.168.1.216:3480/data_request?id=action&output_format=xml&DeviceNum=';
 var deviceUrl2 = '&serviceId=urn:upnp-org:serviceId:SwitchPower1&action=SetTarget&newTargetValue=';
-
+var lockUrl = 'http://192.168.1.216/port_3480/data_request?id=lu_action&output_format=json&DeviceNum=18&serviceId=urn:micasaverde-com:serviceId:DoorLock1&action=SetTarget&newTargetValue='
 //permite recebermos dados de um post
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -109,7 +109,17 @@ app.post('/ToggleDevice/:device_id/:status',function(req,res,next)
     console.log("Comando Recebido device id ="+device_id + "status ="+ status );
 });
 
-
+app.post('/Unlock/:status',function(req,res,next)
+{
+	var statusx = req.param('statusx'); 
+    var url=lockUrl+statusx;
+    request(url,function(error,response,body)
+    {
+    	if (error) throw new Error(error);
+	})
+    res.send("Comando aceite");
+    console.log("Comando Recebido device id =" + "status ="+ status );
+});
 
 
 //Inciar o servidor 
