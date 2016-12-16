@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');    // para lidar com Json ,
 var request = require("request");
 
 //Ligação ao Vera 
-var ligaçoes = ['http://aveiro.m-iti.org/hybridnilm/public/api/v1/plugwise/samples/hourly/plug/000D6F000261B01C/2016-11-26','http://192.168.2.121:3480/data_request?id=sdata&output_format=json'];
+var ligaçoes = ['http://aveiro.m-iti.org/hybridnilm/public/api/v1/plugwise/samples/hourly/plug/000D6F000261B01C/2016-11-26','http://192.168.1.216:3480/data_request?id=sdata&output_format=json'];
 var resultados = [];
-var deviceUrl1 = 'http://192.168.2.121:3480/data_request?id=action&output_format=xml&DeviceNum=';
+var deviceUrl1 = 'http://192.168.1.216:3480/data_request?id=action&output_format=xml&DeviceNum=';
 var deviceUrl2 = '&serviceId=urn:upnp-org:serviceId:SwitchPower1&action=SetTarget&newTargetValue=';
 
 //permite recebermos dados de um post
