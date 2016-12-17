@@ -1,5 +1,3 @@
-//Codigo inicial do webservices , ligaçao com box e vera , codigo muito primordial pouca xp em node,js mas já algo funciona
-
 //Dependencias
 var express    = require('express');        // dependencia do express
 var app        = express();                 // define our app using express
@@ -9,13 +7,13 @@ var mysql      = require('mysql');			// ligação ao mysql
 
 //Base de dados
 //https://github.com/mysqljs/mysql
-var connection = mysql.createConnection({
+/*var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'me',
   password : 'secret',
   database : 'my_db'
 });
-connection.connect();
+connection.connect();*/
 
 //Ligação ao Vera
 var ligaçoes = ['http://aveiro.m-iti.org/hybridnilm/public/api/v1/plugwise/samples/hourly/plug/000D6F000261B01C/2016-11-26','http://192.168.2.121:3480/data_request?id=sdata&output_format=json'];
@@ -31,21 +29,17 @@ var port = process.env.PORT || 8080; //porta para se conectar
 /*Funcão recorsiva que liga-se a casa do lucas e ao vera e retira os dados (neste caso esta a tirar os dados da casa do lucas no dia 11 e ve o resultado
 de um aparelho especificado pelo o mac adress para esse dia todo
 */
-function ligaçãoRecursiva (urls)
- {
-  var url = urls.pop();                               //pop manda para fora o ultimo elemento do array e retorna o elemento removido
-  request(url,function(error,response,body){
-      resultados.push(body);
-   	} );
-      if(urls.length)
-      {
-        ligaçãoRecursiva(urls);
-      }
-      else
-      {
-      	return resultados;
-      	console.log("Recolha de Dados Completa");
-      }
+function ligaçãoRecursiva(urls){
+	var url = urls.pop();                               //pop manda para fora o ultimo elemento do array e retorna o elemento removido
+	request(url,function(error,response,body){
+		resultados.push(body);
+   	});
+	if(urls.length){
+		ligaçãoRecursiva(urls);
+	}else{
+		return resultados;
+		console.log("Recolha de Dados Completa");
+	}
  }
 
 console.log(ligaçãoRecursiva(ligaçoes));
@@ -85,17 +79,14 @@ request(conectarVera, function (error, response, body) {
 */
 
 //Rotas da API
-
 var router = express.Router();
 
-
-router.get('/', function(req, res) {
+router.get('/', function(req, res){
     res.json({ message: 'Bem vindo aos web services!' });
 });
 
 
 //Registar as routas
-
 app.use('/',router);
 
 
@@ -107,21 +98,16 @@ app.get('/RawData',function(req,res){
 
 
 //Liga ou Desliga  status 1 ou 0 , um dispositivo especificado pelo id
-app.post('/ToggleDevice/:device_id/:status',function(req,res,next)
-{
+app.post('/ToggleDevice/:device_id/:status',function(req,res,next){
 	var device_id = req.param('device_id');
     var status = req.param('status');
     var url=deviceUrl1+device_id+deviceUrl2+status;
-    request(url,function(error,response,body)
-    {
+    request(url,function(error,response,body){
     	if (error) throw new Error(error);
-	})
+	});
     res.send("Comando aceite");
     console.log("Comando Recebido device id ="+device_id + "status ="+ status );
 });
-
-
-
 
 //Inciar o servidor
 app.listen(port);

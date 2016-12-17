@@ -1,0 +1,26 @@
+{
+  "name": "hcse",
+  "version": "1.0.0",
+  "description": "hcse",
+  "main": "serverHCSE.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "request": "^2.79.0",
+    "mysql": "^2.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node serverHCSE.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jpedroborges@github.com/LeoCf/HCSE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeoCf/HCSE/issues"
+  },
+  "homepage": "https://github.com/LeoCf/HCSE#readme"
+}
